@@ -35,10 +35,26 @@ initializeDatabase();
 
 app.post('/users', async (req, res) => {
 // Crie o endpoint de users
+  const user = new User();
+        user.firstName = req.body.firstName;
+        user.lastName = req.body.lastName;
+        user.email = req.body.email;
+
+        const userRepository = getRepository(User);
+        await userRepository.save(user);
+        res.status(201).json(user);
 });
 
 app.post('/posts', async (req, res) => {
 // Crie o endpoint de posts
+        const post = new Post();
+        post.title = req.body.title;
+        post.description = req.body.description;
+        post.userId = req.body.userId; // Assumindo que userId é passado no corpo da requisição
+
+        const postRepository = getRepository(Post);
+        await postRepository.save(post);
+        res.status(201).json(post);
 });
 
 const PORT = process.env.PORT || 3000;
